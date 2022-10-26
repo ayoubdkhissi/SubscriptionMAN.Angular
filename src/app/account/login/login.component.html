@@ -17,15 +17,15 @@
 
             <mat-toolbar fxLayoutAlign="center center">Login Page</mat-toolbar>
 
-            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="loginForm">
                 <mat-form-field>
                     <mat-label>Username</mat-label>
-                    <input matInput placeholder="Username">
+                    <input matInput placeholder="Username"  formControlName="username">
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password">
+                    <input matInput placeholder="Password" type="password" formControlName="password">
                 </mat-form-field>
 
                 <div class="m-1 text-center">
@@ -33,7 +33,7 @@
                 </div>
 
 
-                <button mat-stroked-button color="primary">Login</button>
+                <button mat-stroked-button color="primary" (click)="onLoginClicked()">Login</button>
             </form>
         </mat-card>
     </div>

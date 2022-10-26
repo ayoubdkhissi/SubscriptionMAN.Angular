@@ -16,31 +16,31 @@
 
             <mat-toolbar fxLayoutAlign="center center">Register Page</mat-toolbar>
 
-            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="registerForm">
 
                 <mat-form-field>
                     <mat-label>Email</mat-label>
-                    <input matInput placeholder="Email">
+                    <input matInput placeholder="Email" formControlName="email">                    
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Username</mat-label>
-                    <input matInput placeholder="Username">
+                    <input matInput placeholder="Username" formControlName="username">
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Phone Number</mat-label>
-                    <input matInput placeholder="Phone Number">
+                    <input matInput placeholder="Phone Number" formControlName="phoneNumber">
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Password</mat-label>
-                    <input matInput placeholder="Password" type="password">
+                    <input matInput placeholder="Password" type="password" formControlName="password">
                 </mat-form-field>
 
                 <mat-form-field>
                     <mat-label>Repeat-Password</mat-label>
-                    <input matInput placeholder="Repeat-Password" type="password">
+                    <input matInput placeholder="Repeat-Password" type="password" formControlName="rePassword">
                 </mat-form-field>
 
                 <div class="m-1 text-center">
@@ -48,7 +48,7 @@
                 </div>
 
 
-                <button mat-stroked-button color="primary">Register</button>
+                <button mat-stroked-button color="primary" (click)="onRegisterClick()">Register</button>
             </form>
         </mat-card>
     </div>
