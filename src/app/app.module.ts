@@ -8,14 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AccountModule } from './account/account.module';
 import { CoreModule } from './core/core.module';
-
+import { AuthInterceptorProvider } from './core/interceptors/auth.interceptor';
+import { ErrorInterceptorProvider } from './core/interceptors/error.interceptor';
+import { HomeComponent } from './home/home.component';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -23,10 +26,14 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     CoreModule,
     AccountModule,
-    HttpClientModule
+    HttpClientModule,
+    
     
   ],
-  providers: [],
+  providers: [
+    AuthInterceptorProvider,
+    ErrorInterceptorProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

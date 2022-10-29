@@ -1,7 +1,7 @@
 export interface IAuthResponse
 {
-    IsSuccess : boolean;
-    Token: string;
-    RefreshToken: string;
-    Username: string;
+    isSuccess : boolean;
+    token: string;
+    refreshToken: string;
+    username: string;
 }

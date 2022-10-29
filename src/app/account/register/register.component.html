@@ -11,6 +11,12 @@
         </div>
     </div>
 
+    <ul *ngIf="errors.length" fxLayoutAlign="center center" class="alert alert-danger">
+        <div>
+            <li *ngFor="let error of errors" class="">{{error}}</li> 
+        </div>
+    </ul>
+
     <div fxLayoutAlign="center center" fxFlexFill class="main-div">
         <mat-card fxFlex="25">
 

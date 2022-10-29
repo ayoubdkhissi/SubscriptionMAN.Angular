@@ -3,7 +3,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { IAuthRequest } from 'src/app/core/interfaces/Requests/IAuthRequest';
 import { AuthService } from 'src/app/core/services/auth.service';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NONE_TYPE } from '@angular/compiler';
+import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -13,36 +15,47 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class LoginComponent implements OnInit 
 {
   public loginForm! : FormGroup;
-  
+  public snackBar: MatSnackBar;
+
   /* Injectable Services */
   private _formBuilder: FormBuilder;
   private _router: Router;
   private _route: ActivatedRoute;
   private _authService: AuthService;
+  private _tokenService: TokenService;
   
   /* Private members */
-  private returnUrl!: string;
+  private isLoggedIn = false;
 
   constructor(formBuilder: FormBuilder, 
     router: Router, 
     activatedRoute: ActivatedRoute,
-    authService: AuthService) 
+    authService: AuthService,
+    snackBar: MatSnackBar,
+    tokenService: TokenService) 
   {
     this._formBuilder = formBuilder;
     this._router = router;
     this._route = activatedRoute;
     this._authService = authService;
+    this.snackBar = snackBar;
+    this._tokenService = tokenService;
   }
 
   ngOnInit(): void 
   {
+
+    this.isLoggedIn = this._tokenService.isLoggedIn();
+    if(this.isLoggedIn)
+    {
+      this._router.navigate(['home']);
+    }
     
     this.loginForm = this._formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      username: ['bouhcain_ali', [Validators.required, Validators.pattern("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]],
+      password: ['Admin@123', [Validators.required, Validators.minLength(6)]]
     });
 
-    this.returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
 
@@ -57,11 +70,31 @@ export class LoginComponent implements OnInit
     };
     
     this._authService.login(auth_request).subscribe({
-      next: (data => {
-        console.log(data)
-      }),
+      next: data => {
+        
+        // Authentication Succeeded 
+        if(data.isSuccess)
+        {
+          this.snackBar.open("Authentication Success!", '', {
+            duration: 2000,
+            panelClass: ['green-snackbar']
+          })
+          
+          this._tokenService.saveSession(data);
+
+          window.location.reload();
+        }
+        else
+          this.snackBar.open("Authentication Failled! Password or username are incorrect", '', {
+            duration: 2000,
+            panelClass: ['red-snackbar']
+          })
+      },
       error: (error => {
-        console.log(error)
+        this.snackBar.open("An error has occured, please Try again later", '', {
+          duration: 3000,
+          panelClass: ['red-snackbar']
+        });
       })
     });
 

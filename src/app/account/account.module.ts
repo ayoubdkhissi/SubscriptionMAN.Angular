@@ -11,6 +11,9 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { CommonModule } from "@angular/common";
+
 
 @NgModule({
     declarations: [LoginComponent, RegisterComponent],
@@ -25,8 +28,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
         FormsModule,
         ReactiveFormsModule,
+        MatSnackBarModule,
 
+        CommonModule
 
+        
     ]
 })
 export class AccountModule{}

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IRegisterRequest } from 'src/app/core/interfaces/Requests/IRegisterRequest';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { matchValidator } from 'src/app/shared/form-validators';
 
 @Component({
@@ -10,13 +14,27 @@ import { matchValidator } from 'src/app/shared/form-validators';
 export class RegisterComponent implements OnInit {
 
   public registerForm! : FormGroup;
+  public snackBar: MatSnackBar;
+
+  public errors: string[] = [];
 
   /* Injectable Services */
   private _formBuilder: FormBuilder;
-
-  constructor(formBuilder: FormBuilder) 
+  private _router: Router;
+  private _route: ActivatedRoute;
+  private _authService: AuthService;
+  
+  constructor(formBuilder: FormBuilder, 
+    router: Router, 
+    activatedRoute: ActivatedRoute,
+    authService: AuthService,
+    snackBar: MatSnackBar) 
   {
     this._formBuilder = formBuilder;
+    this._router = router;
+    this._route = activatedRoute;
+    this._authService = authService;
+    this.snackBar = snackBar;
   }
 
 
@@ -25,11 +43,11 @@ export class RegisterComponent implements OnInit {
   {
     
     this.registerForm = this._formBuilder.group({
-      email: ['', [Validators.required ,Validators.email]],
-      username: ['', [Validators.required, Validators.pattern("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]],
-      phoneNumber: ['', [Validators.required, Validators.pattern("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$")]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      rePassword : ['', [Validators.required, matchValidator('password')]]
+      email: ['ayoub.dkhissi@gmail.com', [Validators.required ,Validators.email]],
+      username: ['ayoub_dkhissi', [Validators.required, Validators.pattern("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]],
+      phoneNumber: ['0652545856', [Validators.required, Validators.pattern("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$")]],
+      password: ['Admin@123', [Validators.required, Validators.minLength(6)]],
+      rePassword : ['Admin@123', [Validators.required, matchValidator('password')]]
 
     });
   }
@@ -39,7 +57,34 @@ export class RegisterComponent implements OnInit {
     if(this.registerForm.invalid)
       return;
     
-      console.log("A request has been sent to the server with the following credentials:", this.registerForm.value)
+      const registerRequest: IRegisterRequest = {
+        userName: this.registerForm.value.username,
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        phoneNumber: this.registerForm.value.phoneNumber
+      };
+
+      this._authService.register(registerRequest).subscribe({
+        next: data => {
+          if(data.success)
+          {
+            this.snackBar.open("You are successfully registered, Please Login", '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
+            })
+
+            this._router.navigate(['/login']);
+            return;
+            
+          }
+
+          this.snackBar.open("An error has occured, please Try again later", '', {
+            duration: 3000,
+            panelClass: ['red-snackbar']
+          });
+        },
+        error: err => {this.errors = err.error.errors;}
+      });
   }
 
 }
