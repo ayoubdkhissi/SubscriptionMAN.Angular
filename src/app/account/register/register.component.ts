@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IRegisterRequest } from 'src/app/core/interfaces/Requests/IRegisterRequest';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { TokenService } from 'src/app/core/services/token.service';
 import { matchValidator } from 'src/app/shared/form-validators';
 
 @Component({
@@ -15,32 +16,44 @@ export class RegisterComponent implements OnInit {
 
   public registerForm! : FormGroup;
   public snackBar: MatSnackBar;
-
   public errors: string[] = [];
+
+  private isLoggedIn: boolean= false;
 
   /* Injectable Services */
   private _formBuilder: FormBuilder;
   private _router: Router;
-  private _route: ActivatedRoute;
   private _authService: AuthService;
+  private _tokenService: TokenService;
   
   constructor(formBuilder: FormBuilder, 
     router: Router, 
-    activatedRoute: ActivatedRoute,
     authService: AuthService,
-    snackBar: MatSnackBar) 
+    snackBar: MatSnackBar,
+    tokenService: TokenService) 
   {
     this._formBuilder = formBuilder;
     this._router = router;
-    this._route = activatedRoute;
     this._authService = authService;
     this.snackBar = snackBar;
+    this._tokenService = tokenService;
   }
 
 
 
   ngOnInit(): void 
   {
+
+    this.isLoggedIn = this._tokenService.isLoggedIn();
+    if(this.isLoggedIn)
+    {
+      this.snackBar.open("You can't access this page, you are already logged in!", 'dismiss', {
+        duration: 2000,
+        panelClass: ['red-snackbar']
+      });
+
+      this._router.navigate(['home']);
+    }
     
     this.registerForm = this._formBuilder.group({
       email: ['ayoub.dkhissi@gmail.com', [Validators.required ,Validators.email]],
@@ -68,11 +81,13 @@ export class RegisterComponent implements OnInit {
         next: data => {
           if(data.success)
           {
+            console.log("User is successfully registered");
             this.snackBar.open("You are successfully registered, Please Login", '', {
               duration: 3000,
               panelClass: ['green-snackbar']
             })
 
+            console.log("Navigation to the login page");
             this._router.navigate(['/login']);
             return;
             
@@ -83,7 +98,7 @@ export class RegisterComponent implements OnInit {
             panelClass: ['red-snackbar']
           });
         },
-        error: err => {this.errors = err.error.errors;}
+        error: err => {this.errors = err.errors;}
       });
   }
 

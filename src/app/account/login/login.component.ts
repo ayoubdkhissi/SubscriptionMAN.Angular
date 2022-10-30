@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NONE_TYPE } from '@angular/compiler';
 import { TokenService } from 'src/app/core/services/token.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-login',
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit
     this.isLoggedIn = this._tokenService.isLoggedIn();
     if(this.isLoggedIn)
     {
+      
       this._router.navigate(['home']);
     }
     
@@ -75,14 +77,21 @@ export class LoginComponent implements OnInit
         // Authentication Succeeded 
         if(data.isSuccess)
         {
+
+
           this.snackBar.open("Authentication Success!", '', {
             duration: 2000,
             panelClass: ['green-snackbar']
-          })
+          });
           
-          this._tokenService.saveSession(data);
+          setTimeout(() => {
+            this._tokenService.saveSession(data);
 
-          window.location.reload();
+            window.location.reload();
+
+          }, 1000);
+
+          
         }
         else
           this.snackBar.open("Authentication Failled! Password or username are incorrect", '', {
