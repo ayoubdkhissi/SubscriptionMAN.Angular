@@ -1,0 +1,15 @@
+/* Add a transition effect when the modal is shown and hidden */
+.modal-dialog {
+    transition: transform 0.3s;
+  }
+  
+  /* Add a zoom-in effect when the modal is shown */
+  .modal-dialog.show {
+    transform: scale(1);
+  }
+  
+  /* Add a zoom-out effect when the modal is hidden */
+  .modal-dialog.hide {
+    transform: scale(0);
+  }
+  

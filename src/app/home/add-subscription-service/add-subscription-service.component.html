@@ -1,0 +1,16 @@
+<div class="container mt-5">
+    <h2>Add a New Subscription Service</h2>
+    <form [formGroup]="addSubscriptionServiceForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="serviceName">Subscription Service Name:</label>
+            <input formControlName="name" type="text" class="form-control" id="serviceName" placeholder="Enter service name" required="true">
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea formControlName="description" class="form-control" id="description" rows="3" placeholder="Enter description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">Add subscription service</button>
+    </form>
+</div>
+
+<div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>

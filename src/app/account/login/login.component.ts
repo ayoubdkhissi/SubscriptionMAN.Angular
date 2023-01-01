@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit
     }
     
     this.loginForm = this._formBuilder.group({
-      username: ['bouhcain_ali', [Validators.required, Validators.pattern("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]],
+      username: ['ayoub_dkhissi', [Validators.required, Validators.pattern("^(?=.{6,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")]],
       password: ['Admin@123', [Validators.required, Validators.minLength(6)]]
     });
 

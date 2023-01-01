@@ -11,14 +11,15 @@ import { CoreModule } from './core/core.module';
 import { AuthInterceptorProvider } from './core/interceptors/auth.interceptor';
 import { ErrorInterceptorProvider } from './core/interceptors/error.interceptor';
 import { HomeComponent } from './home/home.component';
+import { AddSubscriptionServiceComponent } from './home/add-subscription-service/add-subscription-service.component';
+import { HomeModule } from './home/home.module';
 
 
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +27,7 @@ import { HomeComponent } from './home/home.component';
     BrowserAnimationsModule,
     CoreModule,
     AccountModule,
+    HomeModule,
     HttpClientModule,
     
     
