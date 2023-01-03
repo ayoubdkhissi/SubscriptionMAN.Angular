@@ -3,3 +3,28 @@
 
 
 <button class="btn btn-primary" routerLink="/addSubscriptionService">Add Subscription Service</button>
+
+
+<div class="card mt-5" *ngIf="subscriptionServices.length">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let ss of subscriptionServices">
+                    <td>{{ss.name}}</td>
+                    <td>{{ss.description}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

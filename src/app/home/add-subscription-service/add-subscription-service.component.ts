@@ -50,16 +50,16 @@ export class AddSubscriptionServiceComponent implements OnInit {
       return;
 
     const subscriptionService: ISubscriptionServiceDTO = {
-      Name: this.addSubscriptionServiceForm.value.name,
-      Description: this.addSubscriptionServiceForm.value.description
+      name: this.addSubscriptionServiceForm.value.name,
+      description: this.addSubscriptionServiceForm.value.description
     };
 
-    console.log("Sendind Post request to create a new subscription service. Name " + subscriptionService.Name + " Description " + subscriptionService.Description);
+    console.log("Sendind Post request to create a new subscription service. Name " + subscriptionService.name + " Description " + subscriptionService.description);
     
     this._subscriptionServiceService.createSubscriptionService(subscriptionService).subscribe({
       next: (response) => {
         console.log("Subscription service created successfully");
-        this.snackBar.open("Subscription service " + subscriptionService.Name + " created successfully!", '', {
+        this.snackBar.open("Subscription service " + subscriptionService.name + " created successfully!", '', {
           duration: 2000,
           panelClass: ['green-snackbar']
         });

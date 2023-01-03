@@ -1,5 +1,5 @@
 export interface ISubscriptionServiceDTO
 {
-    Name: string;
-    Description: string;
+    name: string;
+    description: string;
 }
