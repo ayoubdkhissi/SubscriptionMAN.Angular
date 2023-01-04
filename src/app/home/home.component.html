@@ -16,6 +16,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Total Number of Clients</th>
+                    <th>Active Clients</th>
                 </tr>
             </thead>
 
@@ -23,6 +25,8 @@
                 <tr *ngFor="let ss of subscriptionServices">
                     <td>{{ss.name}}</td>
                     <td>{{ss.description}}</td>
+                    <td>{{ss.totalNumberOfClients}}</td>
+                    <td>{{ss.numberOfActiveClients}}</td>
                 </tr>
             </tbody>
         </table>

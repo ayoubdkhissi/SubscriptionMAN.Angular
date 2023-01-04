@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ISubscriptionServiceDTO } from 'src/app/core/interfaces/ISubscriptionServiceDTO';
+import { ISubscriptionServiceForInsert } from 'src/app/core/interfaces/ISubscriptionServiceForInsert';
 import { SubscriptionServiceService } from 'src/app/core/services/subscription-service.service';
 
 @Component({
@@ -49,7 +49,7 @@ export class AddSubscriptionServiceComponent implements OnInit {
     if(this.addSubscriptionServiceForm.invalid)
       return;
 
-    const subscriptionService: ISubscriptionServiceDTO = {
+    const subscriptionService: ISubscriptionServiceForInsert = {
       name: this.addSubscriptionServiceForm.value.name,
       description: this.addSubscriptionServiceForm.value.description
     };

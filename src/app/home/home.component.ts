@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ISubscriptionServiceDTO } from '../core/interfaces/ISubscriptionServiceDTO';
+import { ISubscriptionServiceForInsert } from '../core/interfaces/ISubscriptionServiceForInsert';
+import { ISubscriptionServiceForListing } from '../core/interfaces/ISubscriptionServiceForListing';
 import { SubscriptionServiceService } from '../core/services/subscription-service.service';
 import { TokenService } from '../core/services/token.service';
 
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   
 
   // list of subscription services
-  subscriptionServices: ISubscriptionServiceDTO[] = [];
+  subscriptionServices: ISubscriptionServiceForListing[] = [];
   pageTitle: string = 'List Of your Subscription Services';
 
 
@@ -30,7 +31,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.username = this._tokenService.getSession()?.userName || '';
     
-    this._subscriptionServiceService.getSubscriptionServices().subscribe({
+    this._subscriptionServiceService.getSubscriptionServicesForListing().subscribe({
       next: (response) => {
         this.subscriptionServices = response;
       }
