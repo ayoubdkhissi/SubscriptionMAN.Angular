@@ -2,6 +2,8 @@
 <!-- HTML for the button to trigger the modal -->
 
 
+<div>Total Number of Subscription Services {{totalNumberOfSubscriptionServices}}</div>
+
 <button class="btn btn-primary" routerLink="/addSubscriptionService">Add Subscription Service</button>
 
 
@@ -32,3 +34,10 @@
         </table>
     </div>
 </div>
+
+<mat-paginator [length]="totalNumberOfSubscriptionServices"
+              [pageSize]="paginationSize"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page"
+              (page)="pageEvent($event)">
+</mat-paginator>

@@ -13,6 +13,7 @@ export class SubscriptionServiceService {
   private baseUrl: string = "https://localhost:7169/api/";
   private createSubscriptionServiceEndPoint: string = "createSS";
   private getSubscriptionServicesEndPoint: string = "getUserSubscriptionServices";
+  private getTotalNumberOfSubscriptionServicesEndPoint: string = "getTotalNumberOfSubscriptionServices";
 
 
   /* Injected Services */
@@ -31,9 +32,19 @@ export class SubscriptionServiceService {
   // GET: getting all suscription services of the current user
   // TODO: this method should be modified, it will return a list of another ss interface
   // that also maybe contains the count and additional informations.
-  public getSubscriptionServicesForListing(): Observable<ISubscriptionServiceForListing[]> {
-    return this._httpClient.get<ISubscriptionServiceForListing[]>(this.baseUrl + this.getSubscriptionServicesEndPoint).pipe(tap((response) => {
-      console.log(response);}));
+  public getSubscriptionServicesForListing(pageSize:number, pageNumber:number): Observable<ISubscriptionServiceForListing[]> {
+    return this._httpClient.get<ISubscriptionServiceForListing[]>
+    (this.baseUrl + this.getSubscriptionServicesEndPoint + "?pageSize="+pageSize+"&pageNumber="+pageNumber).pipe(tap((response) => {
+      console.log(response);})
+      );
+  }
+
+
+  // Get: Total Count of subscription services
+  public getTotalNumberOfSubscriptionServices(): Observable<number> {
+    return this._httpClient.get<number>(this.baseUrl + this.getTotalNumberOfSubscriptionServicesEndPoint).pipe(tap((response) => {
+      console.log(response);})
+    );
   }
 
   

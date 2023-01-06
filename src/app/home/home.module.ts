@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 import { AddSubscriptionServiceComponent } from './add-subscription-service/add-subscription-service.component';
 import { AppRoutingModule } from '../app-routing.module';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -15,7 +16,8 @@ import { AppRoutingModule } from '../app-routing.module';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule
   ]
 })
 export class HomeModule { }
