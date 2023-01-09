@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   pageTitle: string = 'List Of your Subscription Services';
   
-  paginationSize: number = 10;
+  paginationSize: number = 5;
   paginationPage: number = 1;
 
   totalNumberOfSubscriptionServices: number = 0;

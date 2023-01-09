@@ -1,43 +1,60 @@
-<p>Welcome Back mister {{username}}</p>
-<!-- HTML for the button to trigger the modal -->
+<script>
+    document.querySelector('#myElement').addEventListener('mouseover', function () {
+        this.classList.add('popular');
+    });
+
+    document.querySelector('#myElement').addEventListener('mouseout', function () {
+        this.classList.remove('popular');
+    });
+</script>
 
 
-<div>Total Number of Subscription Services {{totalNumberOfSubscriptionServices}}</div>
+<h1 class="text-center fs-1 mt-5 fw-bolder">Your Services</h1>
 
-<button class="btn btn-primary" routerLink="/addSubscriptionService">Add Subscription Service</button>
-
-
-<div class="card mt-5" *ngIf="subscriptionServices.length">
-    <div class="card-header">
-        {{pageTitle}}
-    </div>
-
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Total Number of Clients</th>
-                    <th>Active Clients</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let ss of subscriptionServices">
-                    <td>{{ss.name}}</td>
-                    <td>{{ss.description}}</td>
-                    <td>{{ss.totalNumberOfClients}}</td>
-                    <td>{{ss.numberOfActiveClients}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<mat-paginator [length]="totalNumberOfSubscriptionServices"
-              [pageSize]="paginationSize"
-              [pageSizeOptions]="[5, 10, 25, 100]"
-              aria-label="Select page"
-              (page)="pageEvent($event)">
+<mat-paginator [length]="totalNumberOfSubscriptionServices" [pageSize]="paginationSize"
+    [pageSizeOptions]="[5, 10, 25]" aria-label="Select page" (page)="pageEvent($event)">
 </mat-paginator>
+
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Total Clients</th>
+            <th>Active Clients</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr *ngFor="let ss of subscriptionServices">
+            <td>
+                <div class="d-flex align-items-center">
+                    <img src="../../assets/icons/service_icon.png" alt="" style="width: 45px; height: 45px" />
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">{{ss.name}}</p>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <p class="fw-normal mb-1">{{ss.description}}</p>
+            </td>
+            <td>
+                <span class="rounded-pill d-inline">{{ss.totalNumberOfClients}}</span>
+            </td>
+            <td>{{ss.numberOfActiveClients}}</td>
+            <td>
+                <button type="button" class="btn btn-link btn-sm btn-rounded">
+                    Manage
+                </button>
+            </td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+
+<div class="">
+    <button class="btn btn-primary" routerLink="/addSubscriptionService">Add Subscription Service</button>
+</div>
